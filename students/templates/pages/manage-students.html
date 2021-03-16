@@ -1,0 +1,184 @@
+{% extends 'pages/index.html' %} {% block content %}
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Add Student</h5>
+    </div>
+    <div class="card-body">
+      <form action="{% url 'filter' %}" method="POST">
+        {% csrf_token %} {% if error %}
+        <div class="row">
+          <div class="col-md-9 pr-md-1">
+            <div class="form-group">
+              <div class="alert alert-danger" role="alert">{{error}}</div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-md-4 pr-md-1">
+            <div class="form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="First name"
+                name="firstname"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 pl-md-1">
+            <div class="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastname"
+                class="form-control"
+                placeholder="Last Name"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 pl-md-1">
+            <div class="form-group">
+              <label>email</label>
+              <input
+                type="text"
+                name="email"
+                class="form-control"
+                placeholder="email"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5 pr-md-3">
+            <div class="form-group">
+              <label>Age</label>
+              <input type="text" name="age" class="form-control" />
+              <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="up"
+                  name="up"
+                />
+                More than
+                <span class="form-check-sign">
+                  <span class="check"></span>
+                </span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="down"
+                  name="down"
+                />
+                Less than
+                <span class="form-check-sign">
+                  <span class="check"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 pr-md-3">
+          <div class="form-group">
+            <label>Gender</label>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Male"
+                  name="male"
+                />
+                Male
+                <span class="form-check-sign">
+                  <span class="check"></span>
+                </span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Female"
+                  name="female"
+                />
+                Female
+                <span class="form-check-sign">
+                  <span class="check"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button
+            type="submit"
+            name="student_add"
+            class="btn btn-fill btn-primary"
+          >
+            Filter
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Admins</h4>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table tablesorter" id="">
+          <thead class="text-primary">
+            <tr>
+              <th>Admin Name</th>
+              <th>UserName</th>
+              <th>Email</th>
+              <th class="text-center">Role</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if stu %} {%for dat in stu %}
+            <tr>
+              <td>{{dat.first_name}} - {{dat.last_name}}</td>
+              <td>{{dat.email}}</td>
+              <td class="text-center">{{dat.gender}}</td>
+              <td class="text-center">{{dat.age}}</td>
+              <td class="text-center">
+                <a
+                  class="btn btn-info btn-sm col-10"
+                  href="{% url 'edit' id=dat.id %}"
+                  >Edit</a
+                >
+                <a
+                  class="btn btn-danger btn-sm col-10"
+                  href="{% url 'delete' id=dat.id %}"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% endfor %} {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
